@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Bell, Settings, User, Search, Sparkles } from "lucide-react";
+import { Bell, Settings, User, Search, Sparkles, MessageCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -45,6 +46,14 @@ export const Header = () => {
 
           {/* Actions */}
           <div className="flex items-center space-x-3">
+            {/* AI Assistant Link */}
+            <Link to="/ai-assistant">
+              <Button variant="ghost" size="icon" className="relative group">
+                <MessageCircle className="h-4 w-4" />
+                <span className="sr-only">AI Assistant</span>
+              </Button>
+            </Link>
+
             {/* Mobile Search */}
             <Button variant="ghost" size="icon" className="md:hidden">
               <Search className="h-4 w-4" />

@@ -10,15 +10,21 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 export const QuickActions = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleAction = (action: string) => {
     toast({
       title: "Quick Action",
       description: `${action} feature coming soon!`,
     });
+  };
+
+  const handleAIChat = () => {
+    navigate("/ai-assistant");
   };
 
   const actions = [
@@ -44,7 +50,7 @@ export const QuickActions = () => {
       icon: MessageCircle,
       label: "Chat with AI",
       gradient: "bg-gradient-primary",
-      onClick: () => handleAction("AI chat"),
+      onClick: handleAIChat,
     },
     {
       icon: Camera,
