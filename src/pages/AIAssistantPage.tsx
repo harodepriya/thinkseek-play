@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, Mic, MicOff, Bot, User, Menu, X, Bell, Settings, LogOut, Lightbulb, MessageSquare, Coffee, Music, Heart, Sparkles } from "lucide-react";
+import { Send, Mic, MicOff, Bot, User, Menu, X, Bell, Settings, LogOut, Lightbulb, MessageSquare, Coffee, Music, Heart, Sparkles, ArrowLeft, Download, Upload } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -85,6 +86,7 @@ const STORAGE_KEYS = {
 
 const AIAssistantPage = () => {
   // State management
+  const navigate = useNavigate();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isRecording, setIsRecording] = useState(false);
@@ -93,13 +95,39 @@ const AIAssistantPage = () => {
   const [showCheckinModal, setShowCheckinModal] = useState(false);
   const [checkinInput, setCheckinInput] = useState("");
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
+  const [isVoiceSupported, setIsVoiceSupported] = useState(false);
   
-  // Refs for auto-scrolling
+  // Refs for auto-scrolling and voice recognition
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const recognitionRef = useRef<any>(null);
 
   // Initialize: Load messages from localStorage and check for daily check-in
   useEffect(() => {
+    // Check for Web Speech API support
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      setIsVoiceSupported(true);
+      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      recognitionRef.current = new SpeechRecognition();
+      recognitionRef.current.continuous = false;
+      recognitionRef.current.interimResults = false;
+      recognitionRef.current.lang = 'en-US';
+
+      recognitionRef.current.onresult = (event: any) => {
+        const transcript = event.results[0][0].transcript;
+        setInputValue(transcript);
+        setIsRecording(false);
+      };
+
+      recognitionRef.current.onerror = () => {
+        setIsRecording(false);
+      };
+
+      recognitionRef.current.onend = () => {
+        setIsRecording(false);
+      };
+    }
+
     // Load saved messages
     const savedMessages = localStorage.getItem(STORAGE_KEYS.MESSAGES);
     if (savedMessages) {
@@ -200,8 +228,57 @@ const AIAssistantPage = () => {
 
   // Toggle voice recording
   const toggleRecording = () => {
-    setIsRecording(!isRecording);
-    // In a real app, this would start/stop voice recording
+    if (!isVoiceSupported || !recognitionRef.current) return;
+
+    if (isRecording) {
+      recognitionRef.current.stop();
+      setIsRecording(false);
+    } else {
+      recognitionRef.current.start();
+      setIsRecording(true);
+    }
+  };
+
+  // Export chat history
+  const exportChatHistory = () => {
+    const dataStr = JSON.stringify(messages, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'mindscape-chat-history.json';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  // Import chat history
+  const importChatHistory = () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'application/json';
+    input.onchange = (e: any) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event: any) => {
+          try {
+            const imported = JSON.parse(event.target.result);
+            const messagesWithDates = imported.map((msg: any) => ({
+              ...msg,
+              timestamp: new Date(msg.timestamp)
+            }));
+            setMessages(messagesWithDates);
+            localStorage.setItem(STORAGE_KEYS.MESSAGES, JSON.stringify(messagesWithDates));
+          } catch (error) {
+            console.error('Failed to import chat history:', error);
+          }
+        };
+        reader.readAsText(file);
+      }
+    };
+    input.click();
   };
 
   // Handle daily check-in submission
@@ -306,12 +383,22 @@ const AIAssistantPage = () => {
               {isSidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
             
+            {/* Back Button */}
+            <Button
+              variant="ghost"
+              onClick={() => navigate('/')}
+              className="flex items-center gap-2 hover:bg-secondary/20 text-foreground"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span className="hidden sm:inline">Back to Dashboard</span>
+            </Button>
+            
             <div className="flex items-center gap-3">
               <div className="bg-gradient-primary p-2 rounded-lg">
                 <Bot className="h-6 w-6 text-primary-foreground" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-foreground">MindFlow AI</h1>
+                <h1 className="text-xl font-bold text-foreground">MindScape</h1>
                 <p className="text-sm text-muted-foreground hidden sm:block">Your Wellness Assistant</p>
               </div>
             </div>
@@ -319,6 +406,23 @@ const AIAssistantPage = () => {
 
           {/* Header Actions */}
           <div className="flex items-center gap-2">
+            {/* Export/Import Buttons */}
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={exportChatHistory}
+              title="Export Chat History"
+            >
+              <Download className="h-5 w-5 text-foreground" />
+            </Button>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={importChatHistory}
+              title="Import Chat History"
+            >
+              <Upload className="h-5 w-5 text-foreground" />
+            </Button>
             <Button variant="ghost" size="icon" className="relative">
               <Bell className="h-5 w-5 text-foreground" />
               <span className="absolute -top-1 -right-1 bg-destructive text-destructive-foreground text-xs rounded-full h-4 w-4 flex items-center justify-center">
@@ -497,18 +601,21 @@ const AIAssistantPage = () => {
                   />
                 </div>
                 
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={toggleRecording}
-                  className={`shrink-0 ${
-                    isRecording 
-                      ? "bg-destructive/20 text-destructive hover:bg-destructive/30" 
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  {isRecording ? <MicOff className="h-5 w-5" /> : <Mic className="h-5 w-5" />}
-                </Button>
+                {isVoiceSupported && (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={toggleRecording}
+                    className={`shrink-0 ${
+                      isRecording 
+                        ? "bg-destructive/20 text-destructive hover:bg-destructive/30" 
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                    title={isRecording ? "Stop Recording" : "Start Voice Input"}
+                  >
+                    {isRecording ? <MicOff className="h-5 w-5" /> : <Mic className="h-5 w-5" />}
+                  </Button>
+                )}
 
                 <Button
                   onClick={handleSendMessage}
