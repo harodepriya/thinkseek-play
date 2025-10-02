@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { Bell, Settings, User, Search, Sparkles, MessageCircle } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Bell, Settings, User, Search, Sparkles, MessageCircle, LogOut } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +17,21 @@ import { Badge } from "@/components/ui/badge";
 
 export const Header = () => {
   const [notificationCount] = useState(3);
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to logout",
+        variant: "destructive",
+      });
+    } else {
+      navigate("/auth");
+    }
+  };
 
   return (
     <header className="bg-card border-b border-border sticky top-0 z-50 backdrop-blur-xl bg-card/80">
@@ -22,12 +39,12 @@ export const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <div className="bg-gradient-primary p-2 rounded-xl shadow-glow">
-              <Sparkles className="h-6 w-6 text-primary-foreground" />
+            <div className="bg-gradient-primary p-3 rounded-xl shadow-glow">
+              <Sparkles className="h-7 w-7 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-xl font-bold bg-gradient-hero bg-clip-text text-transparent">
-                MindFlow
+              <h1 className="text-2xl font-bold bg-gradient-hero bg-clip-text text-transparent">
+                MindScape
               </h1>
               <p className="text-xs text-muted-foreground">AI-Powered Wellness</p>
             </div>
@@ -92,7 +109,10 @@ export const Header = () => {
                   <span>Settings</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Log out</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLogout} className="text-destructive">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Logout</span>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
