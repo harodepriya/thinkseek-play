@@ -1,8 +1,21 @@
-# Welcome to your Lovable project
+# MindScape - AI-Powered Wellness Companion
 
-## Project info
+A comprehensive mental health and wellness web application built with React, TypeScript, and Tailwind CSS.
 
-**URL**: https://lovable.dev/projects/c315e4eb-3fa4-4f4c-903c-9522628dca77
+## Features
+
+- 🤖 **AI Assistant** - Chat with your AI wellness companion
+- 🎨 **Inspiration Board** - Curate visual inspiration and mood boards
+- 🎵 **Music & Sounds** - Discover mood-based playlists
+- 📝 **Journaling & Notes** - Express your thoughts and feelings
+- ❤️ **Mood & Wellness Tracker** - Track your emotional journey
+- 🎯 **Goals & Challenges** - Build habits and achieve goals
+- 👤 **Profile & Settings** - Manage your account preferences
+- ℹ️ **About & Help** - Get support and information
+
+## Project URL
+
+**Lovable Project**: https://lovable.dev/projects/c315e4eb-3fa4-4f4c-903c-9522628dca77
 
 ## How can I edit this code?
 
@@ -62,7 +75,31 @@ This project is built with:
 
 ## How can I deploy this project?
 
+### Deploy via Lovable (Recommended)
+
 Simply open [Lovable](https://lovable.dev/projects/c315e4eb-3fa4-4f4c-903c-9522628dca77) and click on Share -> Publish.
+
+### Deploy to Netlify
+
+1. Push your code to GitHub
+2. Connect your GitHub repository to Netlify
+3. Set build command: `npm run build`
+4. Set publish directory: `dist`
+5. Deploy!
+
+### Deploy to Vercel
+
+1. Push your code to GitHub
+2. Import your repository to Vercel
+3. Vercel will auto-detect the configuration
+4. Deploy!
+
+## Build Requirements
+
+- Node.js 16+ and npm
+- All dependencies will be installed via `npm install`
+- Build command: `npm run build`
+- Output directory: `dist`
 
 ## Can I connect a custom domain to my Lovable project?
 
