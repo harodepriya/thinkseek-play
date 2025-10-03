@@ -14,7 +14,269 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      chat_messages: {
+        Row: {
+          content: string
+          created_at: string | null
+          id: string
+          timestamp: string | null
+          type: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          id?: string
+          timestamp?: string | null
+          type: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          id?: string
+          timestamp?: string | null
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      favorite_tracks: {
+        Row: {
+          artist: string
+          created_at: string | null
+          id: string
+          mood: string | null
+          title: string
+          track_id: string
+          url: string | null
+          user_id: string
+        }
+        Insert: {
+          artist: string
+          created_at?: string | null
+          id?: string
+          mood?: string | null
+          title: string
+          track_id: string
+          url?: string | null
+          user_id: string
+        }
+        Update: {
+          artist?: string
+          created_at?: string | null
+          id?: string
+          mood?: string | null
+          title?: string
+          track_id?: string
+          url?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      goals: {
+        Row: {
+          completed: boolean | null
+          created_at: string | null
+          description: string | null
+          id: string
+          last_completed_at: string | null
+          streak_count: number | null
+          title: string
+          type: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          completed?: boolean | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          last_completed_at?: string | null
+          streak_count?: number | null
+          title: string
+          type: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          completed?: boolean | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          last_completed_at?: string | null
+          streak_count?: number | null
+          title?: string
+          type?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      inspiration_boards: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          name: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      inspiration_pins: {
+        Row: {
+          board_id: string | null
+          created_at: string | null
+          id: string
+          image_url: string
+          is_favorited: boolean | null
+          mood: string | null
+          tags: string[] | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          board_id?: string | null
+          created_at?: string | null
+          id?: string
+          image_url: string
+          is_favorited?: boolean | null
+          mood?: string | null
+          tags?: string[] | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          board_id?: string | null
+          created_at?: string | null
+          id?: string
+          image_url?: string
+          is_favorited?: boolean | null
+          mood?: string | null
+          tags?: string[] | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inspiration_pins_board_id_fkey"
+            columns: ["board_id"]
+            isOneToOne: false
+            referencedRelation: "inspiration_boards"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      journal_entries: {
+        Row: {
+          content: string
+          created_at: string | null
+          id: string
+          prompt: string | null
+          sentiment: string | null
+          timestamp: string | null
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          id?: string
+          prompt?: string | null
+          sentiment?: string | null
+          timestamp?: string | null
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          id?: string
+          prompt?: string | null
+          sentiment?: string | null
+          timestamp?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      mood_logs: {
+        Row: {
+          created_at: string | null
+          id: string
+          mood: string
+          note: string | null
+          timestamp: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          mood: string
+          note?: string | null
+          timestamp?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          mood?: string
+          note?: string | null
+          timestamp?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string | null
+          id: string
+          language: string | null
+          notifications_enabled: boolean | null
+          theme: string | null
+          updated_at: string | null
+          username: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
+          id: string
+          language?: string | null
+          notifications_enabled?: boolean | null
+          theme?: string | null
+          updated_at?: string | null
+          username?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
+          id?: string
+          language?: string | null
+          notifications_enabled?: boolean | null
+          theme?: string | null
+          updated_at?: string | null
+          username?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
