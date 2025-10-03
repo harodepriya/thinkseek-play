@@ -61,7 +61,7 @@ const MusicSounds = () => {
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <div>
-              <h1 className="text-2xl font-bold bg-gradient-hero bg-clip-text text-transparent">
+              <h1 className="text-2xl font-bold text-foreground">
                 Music & Sounds
               </h1>
               <p className="text-sm text-muted-foreground">Find your perfect soundtrack</p>
@@ -76,7 +76,7 @@ const MusicSounds = () => {
           <h2 className="text-xl font-semibold mb-4">Daily Playlists</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {PLAYLISTS.map((playlist, idx) => (
-              <Card key={idx} className="hover:shadow-lg transition-shadow cursor-pointer bg-gradient-to-br from-primary/10 to-secondary/10">
+              <Card key={idx} className="hover:shadow-lg transition-shadow cursor-pointer border-2">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <span className="text-3xl">{playlist.emoji}</span>

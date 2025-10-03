@@ -96,7 +96,7 @@ const MoodTracker = () => {
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <div>
-              <h1 className="text-2xl font-bold bg-gradient-hero bg-clip-text text-transparent">
+              <h1 className="text-2xl font-bold text-foreground">
                 Mood & Wellness Tracker
               </h1>
               <p className="text-sm text-muted-foreground">Track your emotional journey</p>
@@ -135,7 +135,7 @@ const MoodTracker = () => {
         </Card>
 
         {/* Insights */}
-        <Card className="mb-6 bg-gradient-to-br from-primary/10 to-secondary/10">
+        <Card className="mb-6 border-2">
           <CardHeader>
             <CardTitle>Personalized Insights</CardTitle>
           </CardHeader>

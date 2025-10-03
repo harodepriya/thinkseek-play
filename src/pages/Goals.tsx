@@ -141,7 +141,7 @@ const Goals = () => {
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <div>
-              <h1 className="text-2xl font-bold bg-gradient-hero bg-clip-text text-transparent">
+              <h1 className="text-2xl font-bold text-foreground">
                 Goals & Challenges
               </h1>
               <p className="text-sm text-muted-foreground">Build better habits</p>
@@ -152,7 +152,7 @@ const Goals = () => {
 
       <main className="container mx-auto px-4 py-6 max-w-4xl">
         {/* Achievements */}
-        <Card className="mb-6 bg-gradient-to-br from-yellow-500/10 to-orange-500/10">
+        <Card className="mb-6 border-2">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Trophy className="h-5 w-5" />

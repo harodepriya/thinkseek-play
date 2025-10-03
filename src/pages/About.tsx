@@ -43,7 +43,7 @@ const About = () => {
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <div>
-              <h1 className="text-2xl font-bold bg-gradient-hero bg-clip-text text-transparent">
+              <h1 className="text-2xl font-bold text-foreground">
                 About & Help
               </h1>
               <p className="text-sm text-muted-foreground">Get support and information</p>
@@ -54,7 +54,7 @@ const About = () => {
 
       <main className="container mx-auto px-4 py-6 max-w-3xl">
         {/* App Info */}
-        <Card className="mb-6 bg-gradient-to-br from-primary/10 to-secondary/10">
+        <Card className="mb-6 border-2">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Info className="h-5 w-5" />

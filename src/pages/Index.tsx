@@ -19,56 +19,48 @@ const FEATURE_CARDS = [
     description: "Chat with your AI wellness companion",
     icon: MessageCircle,
     path: "/ai-assistant",
-    gradient: "from-blue-500/10 to-cyan-500/10",
   },
   {
     title: "Inspiration Board",
     description: "Curate visual inspiration and mood boards",
     icon: Image,
     path: "/inspiration",
-    gradient: "from-purple-500/10 to-pink-500/10",
   },
   {
     title: "Music & Sounds",
     description: "Discover mood-based playlists",
     icon: Music,
     path: "/music",
-    gradient: "from-green-500/10 to-emerald-500/10",
   },
   {
     title: "Journaling & Notes",
     description: "Express your thoughts and feelings",
     icon: BookOpen,
     path: "/journaling",
-    gradient: "from-orange-500/10 to-yellow-500/10",
   },
   {
     title: "Mood & Wellness",
     description: "Track your emotional journey",
     icon: Heart,
     path: "/mood",
-    gradient: "from-red-500/10 to-rose-500/10",
   },
   {
     title: "Goals & Challenges",
     description: "Build habits and achieve goals",
     icon: Target,
     path: "/goals",
-    gradient: "from-indigo-500/10 to-blue-500/10",
   },
   {
     title: "Profile & Settings",
     description: "Manage your account preferences",
     icon: User,
     path: "/profile",
-    gradient: "from-slate-500/10 to-gray-500/10",
   },
   {
     title: "About & Help",
     description: "Get support and information",
     icon: Info,
     path: "/about",
-    gradient: "from-teal-500/10 to-cyan-500/10",
   },
 ];
 
@@ -85,7 +77,7 @@ const Index = () => {
           <h1 className="text-5xl md:text-6xl font-extrabold text-foreground">
             Welcome to MindScape
           </h1>
-          <div className="h-1 w-32 mx-auto bg-gradient-hero rounded-full"></div>
+          <div className="h-1 w-32 mx-auto bg-primary rounded-full"></div>
           <p className="text-muted-foreground text-lg font-medium max-w-2xl mx-auto">
             Your complete wellness companion for mental health and personal growth
           </p>
@@ -98,7 +90,7 @@ const Index = () => {
             return (
               <Card
                 key={feature.path}
-                className={`group cursor-pointer hover:shadow-lg transition-all duration-300 bg-gradient-to-br ${feature.gradient} border-2 hover:border-primary/50`}
+                className="group cursor-pointer hover:shadow-lg transition-all duration-300 border-2 hover:border-primary/50 bg-card"
                 onClick={() => navigate(feature.path)}
               >
                 <CardHeader>
@@ -118,19 +110,19 @@ const Index = () => {
 
         {/* Quick Stats */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="text-center bg-gradient-to-br from-primary/5 to-secondary/5 border-2">
+          <Card className="text-center border-2 bg-card">
             <CardContent className="pt-6">
               <div className="text-5xl font-extrabold text-primary mb-2">8</div>
               <p className="text-sm font-semibold text-foreground">Features to Explore</p>
             </CardContent>
           </Card>
-          <Card className="text-center bg-gradient-to-br from-secondary/5 to-tertiary/5 border-2">
+          <Card className="text-center border-2 bg-card">
             <CardContent className="pt-6">
               <div className="text-5xl font-extrabold text-secondary mb-2">∞</div>
               <p className="text-sm font-semibold text-foreground">Possibilities for Growth</p>
             </CardContent>
           </Card>
-          <Card className="text-center bg-gradient-to-br from-tertiary/5 to-primary/5 border-2">
+          <Card className="text-center border-2 bg-card">
             <CardContent className="pt-6">
               <div className="text-5xl font-extrabold text-tertiary mb-2">24/7</div>
               <p className="text-sm font-semibold text-foreground">AI Assistance Available</p>
